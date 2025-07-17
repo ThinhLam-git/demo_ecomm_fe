@@ -6,7 +6,20 @@ function Header() {
 
     function handleLogout() {
         localStorage.clear();
-        navigate("/register");
+        navigate("/login");
+    }
+
+    function handleNavBarLogout() {
+        if (user) {
+            return (
+                <Nav className="nav-wrapper">
+                    <NavDropdown title={user && user.name} id="basic-nav-dropdown" className="nav-dropdown">
+                        <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
+                        <NavDropdown.Item>Profile</NavDropdown.Item>
+                    </NavDropdown>
+                </Nav>
+            )
+        }
     }
 
     return (
@@ -17,6 +30,7 @@ function Header() {
                     {
                         localStorage.getItem("user-info") ?
                             <>
+                                <Link to="/" className="nav-link">Product List</Link>
                                 <Link to="/add-product" className="nav-link">Add Product</Link>
                                 <Link to="/update-product" className="nav-link">Update Product</Link>
                             </>
@@ -28,12 +42,8 @@ function Header() {
                     }
                 </Nav>
 
-                localStorage.getItem(user-info) ? 
-                {<Nav>
-                    <NavDropdown title={user && user.name} id="basic-nav-dropdown">
-                        <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
-                    </NavDropdown>
-                </Nav>}
+                localStorage.getItem(user-info) ?
+                {handleNavBarLogout()}
             </Navbar>
         </div>
     )
